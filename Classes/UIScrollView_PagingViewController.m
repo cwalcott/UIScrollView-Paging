@@ -11,7 +11,7 @@
 @implementation UIScrollView_PagingViewController
 
 
-@synthesize scrollView;
+@synthesize scrollView, pageControl;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -31,6 +31,16 @@
 	}
 	
 	self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * colors.count, self.scrollView.frame.size.height);
+	
+	self.pageControl.currentPage = 0;
+	self.pageControl.numberOfPages = colors.count;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+	// Switch the indicator when more than 50% of the previous/next page is visible
+	CGFloat pageWidth = self.scrollView.frame.size.width;
+	int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+	self.pageControl.currentPage = page;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,11 +54,13 @@
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
 	self.scrollView = nil;
+	self.pageControl = nil;
 }
 
 
 - (void)dealloc {
 	[scrollView release];
+	[pageControl release];
     [super dealloc];
 }
 

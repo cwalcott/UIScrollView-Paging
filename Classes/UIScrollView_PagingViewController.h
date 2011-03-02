@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIScrollView_PagingViewController : UIViewController {
+@interface UIScrollView_PagingViewController : UIViewController <UIScrollViewDelegate> {
 	UIScrollView* scrollView;
+	UIPageControl* pageControl;
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView* scrollView;
+@property (nonatomic, retain) IBOutlet UIPageControl* pageControl;
 
 @end
-
