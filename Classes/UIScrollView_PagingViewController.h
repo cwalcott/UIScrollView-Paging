@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface UIScrollView_PagingViewController : UIViewController {
-
+	UIScrollView* scrollView;
 }
+
+@property (nonatomic, retain) IBOutlet UIScrollView* scrollView;
 
 @end
 
