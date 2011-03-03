@@ -11,6 +11,8 @@
 @interface UIScrollView_PagingViewController : UIViewController <UIScrollViewDelegate> {
 	UIScrollView* scrollView;
 	UIPageControl* pageControl;
+	
+	BOOL pageControlBeingUsed;
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView* scrollView;

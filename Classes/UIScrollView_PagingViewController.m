@@ -17,6 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	pageControlBeingUsed = NO;
+	
 	NSArray *colors = [NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], [UIColor blueColor], nil];
 	for (int i = 0; i < colors.count; i++) {
 		CGRect frame;
@@ -37,19 +39,35 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
-	// Switch the indicator when more than 50% of the previous/next page is visible
-	CGFloat pageWidth = self.scrollView.frame.size.width;
-	int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-	self.pageControl.currentPage = page;
+	if (!pageControlBeingUsed) {
+		// Switch the indicator when more than 50% of the previous/next page is visible
+		CGFloat pageWidth = self.scrollView.frame.size.width;
+		int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+		self.pageControl.currentPage = page;
+	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+	pageControlBeingUsed = NO;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+	pageControlBeingUsed = NO;
 }
 
 - (IBAction)changePage {
-	// update the scroll view to the appropriate page
+	// Update the scroll view to the appropriate page
 	CGRect frame;
 	frame.origin.x = self.scrollView.frame.size.width * self.pageControl.currentPage;
 	frame.origin.y = 0;
 	frame.size = self.scrollView.frame.size;
-	[self.scrollView scrollRectToVisible:frame animated:YES];	
+	[self.scrollView scrollRectToVisible:frame animated:YES];
+	
+	// Keep track of when scrolls happen in response to the page control
+	// value changing. If we don't do this, a noticeable "flashing" occurs
+	// as the the scroll delegate will temporarily switch back the page
+	// number.
+	pageControlBeingUsed = YES;
 }
 
 - (void)didReceiveMemoryWarning {
