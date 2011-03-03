@@ -43,6 +43,15 @@
 	self.pageControl.currentPage = page;
 }
 
+- (IBAction)changePage {
+	// update the scroll view to the appropriate page
+	CGRect frame;
+	frame.origin.x = self.scrollView.frame.size.width * self.pageControl.currentPage;
+	frame.origin.y = 0;
+	frame.size = self.scrollView.frame.size;
+	[self.scrollView scrollRectToVisible:frame animated:YES];	
+}
+
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
