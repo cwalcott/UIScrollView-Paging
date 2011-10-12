@@ -19,5 +19,6 @@
 @property (nonatomic, retain) IBOutlet UIPageControl* pageControl;
 
 - (IBAction)changePage;
+- (IBAction)buttonPressed:(id)sender;
 
 @end

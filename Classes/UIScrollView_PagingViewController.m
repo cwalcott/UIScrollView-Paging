@@ -28,6 +28,19 @@
 		
 		UIView *subview = [[UIView alloc] initWithFrame:frame];
 		subview.backgroundColor = [colors objectAtIndex:i];
+		
+		CGRect buttonFrame;
+		buttonFrame.origin.x = (frame.size.width / 2) - 50;
+		buttonFrame.origin.y = (frame.size.height / 2) - 25;
+		buttonFrame.size.width = 100;
+		buttonFrame.size.height = 50;
+		UIButton *subviewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+		subviewButton.frame = buttonFrame;
+		[subviewButton setTitle:@"Button" forState:UIControlStateNormal];
+		[subviewButton setTag:i+1];
+		[subviewButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+		[subview addSubview:subviewButton];
+		
 		[self.scrollView addSubview:subview];
 		[subview release];
 	}
@@ -68,6 +81,16 @@
 	// as the the scroll delegate will temporarily switch back the page
 	// number.
 	pageControlBeingUsed = YES;
+}
+
+- (IBAction)buttonPressed:(id)sender {
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Button pressed"
+													message:[NSString stringWithFormat:@"You pressed the button on page %d.", [sender tag]]
+												   delegate:nil
+										  cancelButtonTitle:@"OK"
+										  otherButtonTitles:nil];
+	[alert show];
+	[alert release];
 }
 
 - (void)didReceiveMemoryWarning {
