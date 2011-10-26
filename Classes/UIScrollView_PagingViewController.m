@@ -19,36 +19,7 @@
 	
 	pageControlBeingUsed = NO;
 	
-	NSArray *colors = [NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], [UIColor blueColor], nil];
-	for (int i = 0; i < colors.count; i++) {
-		CGRect frame;
-		frame.origin.x = self.scrollView.frame.size.width * i;
-		frame.origin.y = 0;
-		frame.size = self.scrollView.frame.size;
-		
-		UIView *subview = [[UIView alloc] initWithFrame:frame];
-		subview.backgroundColor = [colors objectAtIndex:i];
-		
-		CGRect buttonFrame;
-		buttonFrame.origin.x = (frame.size.width / 2) - 50;
-		buttonFrame.origin.y = (frame.size.height / 2) - 25;
-		buttonFrame.size.width = 100;
-		buttonFrame.size.height = 50;
-		UIButton *subviewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-		subviewButton.frame = buttonFrame;
-		[subviewButton setTitle:@"Button" forState:UIControlStateNormal];
-		[subviewButton setTag:i+1];
-		[subviewButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-		[subview addSubview:subviewButton];
-		
-		[self.scrollView addSubview:subview];
-		[subview release];
-	}
-	
-	self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * colors.count, self.scrollView.frame.size.height);
-	
-	self.pageControl.currentPage = 0;
-	self.pageControl.numberOfPages = colors.count;
+	self.scrollView.contentSize = CGSizeMake(960, 424);
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
